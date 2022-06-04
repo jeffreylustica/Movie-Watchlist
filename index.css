@@ -172,7 +172,7 @@ header {
 .movie {
     display: grid;
     grid-gap: 1em;    
-    grid-template-columns: 2fr 5fr ;
+    grid-template-columns: 3fr 7fr ;
     grid-template-areas: 
         "infoPrimary infoPrimary"
         "coverImg intro"
@@ -198,6 +198,7 @@ header {
 
 .movie-cover-image {
     width: 100%;
+    min-width: 105px;
     /* height: 100%; */
     grid-area: coverImg;
 }
