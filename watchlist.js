@@ -1,51 +1,31 @@
-const formSubmit = document.querySelector('#search-movie-form')
+const savedMovieList = JSON.parse(localStorage.getItem("MovieWatchlist"))
 const movieListContainerEl = document.querySelector('#movie-list-container-el')
 
-let movieIdArr = []
-let movieListArr = []
 
-formSubmit.addEventListener('submit', (event) => {
-    const formData = new FormData(event.target)
-    const searchInput = formData.get('input').toLocaleLowerCase()
-    event.preventDefault()
-
-    if (searchInput) {
-        movieListContainerEl.innerHTML = ""
-        fetchSearchInput(searchInput)
-    } else {
-        movieListContainerEl.innerHTML = `
-        <div class="display-message">
-            <p>Unable to find what you’re looking for. Please try another search.</p>
-        </div>`
+if (savedMovieList) {
+    async function awaitReturn() {
+        const movieArrHtml = savedMovieList.map(async (movieId) => {
+            return await getMovieInfo(movieId)
+        }) 
+        return movieArrHtml
     }
-})
+             
+    (async () => {
+        const values = await Promise.all(await awaitReturn())
+        movieListContainerEl.innerHTML = values.join('')
+        
+        createAddListButton()
+    })()
 
-async function fetchSearchInput(searchInput) {
-    const res = await fetch(`http://www.omdbapi.com/?apikey=6c3bc615&s=${searchInput}`)
-    const data = await res.json()
-
-    if (data) {
-        const dataArr = data.Search
-        movieIdArr = dataArr.map(data => {
-            return data.imdbID
-        })
-
-        async function awaitReturn() {
-            const movieArrHtml = movieIdArr.map(async (movieId) => {
-                return await getMovieInfo(movieId)
-            }) 
-            return movieArrHtml
-        }
-                 
-        (async () => {
-            const values = await Promise.all(await awaitReturn())
-            movieListContainerEl.innerHTML = values.join('')
-            
-            createAddListButton()
-        })()
-    } else {
-        displayMessage(errorMessage)
-    } 
+} else {
+    movieListContainerEl.innerHTML = `
+        <div class="display-message">
+            <p>Your watchlist is looking a little empty...</p>
+            <a href="index.html" class="add-watchlist button-watchlist">
+                <img src="icons/Orion_add-circle.png" alt="plus sign with black background" class="toggle-icon">
+                Let’s add some movies!
+            </a>
+        </div>`
 }
 
 async function getMovieInfo(movieId) {
@@ -78,8 +58,6 @@ async function getMovieInfo(movieId) {
     `
 }
 
-let MovieWatchlist = JSON.parse(localStorage.getItem("MovieWatchlist")) || []
-
 function createAddListButton() {
     const addWatchlistBtn = document.querySelectorAll('#add-watchlist-btn')
 
@@ -96,4 +74,3 @@ function createAddListButton() {
         })
     })
 }
-
