@@ -6,7 +6,7 @@ let movieListArr = []
 
 formSubmit.addEventListener('submit', (event) => {
     const formData = new FormData(event.target)
-    const searchInput = formData.get('input').toLocaleLowerCase()
+    const searchInput = formData.get('input').toLowerCase()
     event.preventDefault()
 
     if (searchInput) {
@@ -89,10 +89,7 @@ function createAddListButton() {
             if(!MovieWatchlist.includes(movieId)) {
                 MovieWatchlist.push(movieId)
                 localStorage.setItem("MovieWatchlist", JSON.stringify(MovieWatchlist))
-                console.log(JSON.parse(localStorage.getItem("MovieWatchlist")))
-                console.log(MovieWatchlist)
-            }
-            
+            }           
         })
     })
 }
