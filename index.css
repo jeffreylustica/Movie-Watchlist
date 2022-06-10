@@ -108,6 +108,9 @@ h1 {
 .display-message a {
     text-decoration: none;
     color: var(--fc-semidark);
+    font-size: var(--fs-small);
+    display: flex;
+    align-items: center;
 }
 
 /* layout */
