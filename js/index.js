@@ -20,7 +20,9 @@ formSubmit.addEventListener('submit', (e) => {
 
         (async () => {
             const movieIdArr = await awaitReturn()
-            renderHtmlReturn(movieIdArr)
+            if (movieIdArr) {
+                renderHtmlReturn(movieIdArr)
+            }           
         })()
         
     }
@@ -31,7 +33,7 @@ async function fetchSearchInput(searchInput) {
     const data = await res.json()
     console.log(data)
 
-    if (data) {
+    if (data.Response === "True") {
         const dataArr = data.Search
         const movieIds = dataArr.map(data => {
             return data.imdbID
