@@ -31,7 +31,6 @@ formSubmit.addEventListener('submit', (e) => {
 async function fetchSearchInput(searchInput) {
     const res = await fetch(`http://www.omdbapi.com/?apikey=6c3bc615&s=${searchInput}`)
     const data = await res.json()
-    console.log(data)
 
     if (data.Response === "True") {
         const dataArr = data.Search
