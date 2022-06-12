@@ -1,5 +1,5 @@
 import {movieListContainerEl} from './variables.js'
-import {renderHtmlReturn} from './utils.js'
+import {fetchSearchInput, renderHtmlReturn} from './utils.js'
 
 const formSubmit = document.querySelector('#search-movie-form')
 
@@ -15,7 +15,7 @@ formSubmit.addEventListener('submit', (e) => {
             </div>`
     
         function awaitReturn() {
-            return fetchSearchInput(searchInput)
+            return fetchSearchInput(searchInput, 1)
         }
 
         (async () => {
@@ -28,22 +28,8 @@ formSubmit.addEventListener('submit', (e) => {
     }
 })
 
-async function fetchSearchInput(searchInput) {
-    const res = await fetch(`http://www.omdbapi.com/?apikey=6c3bc615&s=${searchInput}`)
-    const data = await res.json()
 
-    if (data.Response === "True") {
-        const dataArr = data.Search
-        const movieIds = dataArr.map(data => {
-            return data.imdbID
-        })
-        return movieIds     
-    } else {
-        movieListContainerEl.innerHTML = `
-        <div class="display-message">
-            <p>Unable to find what you’re looking for. Please try another search.</p>
-        </div>`
-    } 
-}
+
+
 
 

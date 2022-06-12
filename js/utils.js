@@ -1,4 +1,25 @@
 import {movieListContainerEl, MovieWatchlist, page} from './variables.js'
+import {createPagination} from './pagination.js'
+
+async function fetchSearchInput(searchInput, pageNumber) {
+    const res = await fetch(`http://www.omdbapi.com/?apikey=6c3bc615&s=${searchInput}&page=${pageNumber}`)
+    const data = await res.json()
+
+    if (data.Response === "True") {
+        const dataArr = data.Search
+        const movieIds = dataArr.map(data => {
+            return data.imdbID
+        })
+        return movieIds     
+    } else {
+        movieListContainerEl.innerHTML = `
+        <div class="display-message">
+            <p>Unable to find what you’re looking for. Please try another search.</p>
+        </div>`
+        const paginationEl = document.querySelector('#pagination')
+        paginationEl.style.display = "none"
+    } 
+}
 
 function renderHtmlReturn(argsArr) {
     async function awaitReturn() {
@@ -13,6 +34,7 @@ function renderHtmlReturn(argsArr) {
         movieListContainerEl.innerHTML = values.join('')            
         createListButton()
         page === "index" && changeButtonIcon(argsArr)
+        createPagination()
     })()
 }
 
@@ -94,4 +116,4 @@ function renderWatchlist(watchlist) {
 }
 
 
-export {renderHtmlReturn, getMovieInfo, createListButton, changeButtonIcon, renderWatchlist}
+export {fetchSearchInput, renderHtmlReturn, getMovieInfo, createListButton, changeButtonIcon, renderWatchlist}

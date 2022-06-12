@@ -253,3 +253,33 @@ header {
 .read-more {
     color: var(--fc-dark);
 }
+
+/* pagination */
+.page-select {
+    text-align: center;
+    display: none;
+}
+
+.page-number {
+    font-family: var(--ff-inter);
+    font-size: var(--fs-body);
+    background: none;
+    border: none;
+    padding: .5em 1em;
+    cursor: pointer;
+}
+
+.page-number:hover {
+    background-color: var(--fc-semidark);
+    color: var(--fc-light);
+}
+
+.page-number:hover {
+    background-color: var(--fc-semidark);
+    color: var(--fc-light);
+}
+
+.active {
+    background-color: var(--fc-semidark);
+    color: var(--fc-light);
+}
