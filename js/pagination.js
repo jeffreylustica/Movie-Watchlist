@@ -75,7 +75,7 @@ function addActiveState() {
 
     pageButton.forEach(button => {
         button.addEventListener('click', (e) => {
-            const current = document.querySelector('.active')
+            const current = paginationContainer.querySelector('.active')
             if (current) {
                 current.classList.remove('active')
             }           
