@@ -1,5 +1,6 @@
 import {movieListContainerEl} from './variables.js'
 import {fetchSearchInput, renderHtmlReturn} from './utils.js'
+import {createPagination} from './pagination.js'
 
 const formSubmit = document.querySelector('#search-movie-form')
 
@@ -24,7 +25,8 @@ formSubmit.addEventListener('submit', (e) => {
                 renderHtmlReturn(movieIdArr)
             }           
         })()
-        
+
+        createPagination()        
     }
 })
 

@@ -34,7 +34,6 @@ function renderHtmlReturn(argsArr) {
         movieListContainerEl.innerHTML = values.join('')            
         createListButton()
         page === "index" && changeButtonIcon(argsArr)
-        createPagination()
     })()
 }
 
