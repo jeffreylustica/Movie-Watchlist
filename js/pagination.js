@@ -1,14 +1,11 @@
 import {movieListContainerEl} from './variables.js'
 import {fetchSearchInput, renderHtmlReturn} from './utils.js'
 
-
-
 function createPagination() {
     let highestPageNumber = 5
     let lowestPageNumber = 1
     renderPagination(highestPageNumber, lowestPageNumber)
-    handleButtons(highestPageNumber, lowestPageNumber)
-    
+    handleButtons(highestPageNumber, lowestPageNumber) 
 }
 
 function renderPagination(highestPageNumber, lowestPageNumber) {
@@ -31,6 +28,7 @@ function renderPagination(highestPageNumber, lowestPageNumber) {
     paginationEl.innerHTML = paginationHtml
 
     handleButtons(highestPageNumber, lowestPageNumber)
+    addActiveState()
 }
 
 
@@ -67,6 +65,22 @@ function handleButtons(highestPageNumber, lowestPageNumber) {
                 }           
             })()
 
+        })
+    })
+}
+
+function addActiveState() {
+    const paginationContainer = document.querySelector('#pagination')
+    const pageButton = paginationContainer.querySelectorAll('.page-number')
+
+    pageButton.forEach(button => {
+        button.addEventListener('click', (e) => {
+            const current = document.querySelector('.active')
+            if (current) {
+                current.classList.remove('active')
+            }           
+            const thisBUtton = e.target
+            thisBUtton.classList.add('active')
         })
     })
 }

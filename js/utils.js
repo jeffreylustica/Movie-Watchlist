@@ -1,5 +1,4 @@
 import {movieListContainerEl, MovieWatchlist, page} from './variables.js'
-import {createPagination} from './pagination.js'
 
 async function fetchSearchInput(searchInput, pageNumber) {
     const res = await fetch(`http://www.omdbapi.com/?apikey=6c3bc615&s=${searchInput}&page=${pageNumber}`)
