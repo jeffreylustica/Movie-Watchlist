@@ -16,9 +16,15 @@ function renderPagination(highestPageNumber, lowestPageNumber) {
     let paginationHtml = ""
 
     for (let i = highestPageNumber - 5; i < highestPageNumber; i++) {
-        pageNumberButtonsHtml += `
-        <button class="page-number" data-index= ${i + 1} >${i + 1}</button>
-        `      
+        if (i+1 === 1) {
+            pageNumberButtonsHtml += `
+            <button class="page-number active" data-index= ${i + 1} >${i + 1}</button>
+            `  
+        } else {
+            pageNumberButtonsHtml += `
+            <button class="page-number" data-index= ${i + 1} >${i + 1}</button>
+            `      
+        }
     } 
     paginationHtml = `
         ${highestPageNumber !== 5 ? `<button class="page-number" data-index=${highestPageNumber - 5}>&laquo;</button>` : ""}  
@@ -28,7 +34,6 @@ function renderPagination(highestPageNumber, lowestPageNumber) {
     paginationEl.innerHTML = paginationHtml
 
     handleButtons(highestPageNumber, lowestPageNumber)
-    addActiveState()
 }
 
 
@@ -47,13 +52,15 @@ function handleButtons(highestPageNumber, lowestPageNumber) {
                 renderPagination(highestPageNumber, lowestPageNumber)
             }
             
-            const searchInput = document.querySelector('#search-input')
+            addActiveState(pageNumber)
 
             movieListContainerEl.innerHTML = `
             <div class="display-message">
                 <p>Loading...</p>
             </div>`
     
+            const searchInput = document.querySelector('#search-input')
+
             function awaitReturn() {
                 return fetchSearchInput(searchInput.value, pageNumber)
             }
@@ -72,19 +79,18 @@ function handleButtons(highestPageNumber, lowestPageNumber) {
     })
 }
 
-function addActiveState() {
+function addActiveState(pageNumber) {
     const paginationContainer = document.querySelector('#pagination')
     const pageButton = paginationContainer.querySelectorAll('.page-number')
 
     pageButton.forEach(button => {
-        button.addEventListener('click', (e) => {
+        if (button.textContent === pageNumber) {
             const current = paginationContainer.querySelector('.active')
             if (current) {
                 current.classList.remove('active')
-            }           
-            const thisBUtton = e.target
-            thisBUtton.classList.add('active')
-        })
+            }
+            button.classList.add('active')
+        }
     })
 }
 
