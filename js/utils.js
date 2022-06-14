@@ -85,7 +85,7 @@ async function getMovieInfo(movieId) {
             </div>
 
             <p class="movie-intro">
-            ${Plot}<span class="read-more">Read more</span>
+            ${Plot}
             </p>                
         </div>`
 }

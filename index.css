@@ -217,6 +217,7 @@ header {
     min-width: 105px;
     /* height: 100%; */
     grid-area: coverImg;
+    margin: auto 0;
 }
 
 .movie-info-primary {
@@ -248,10 +249,6 @@ header {
     background: none;
     border: none;
     cursor: pointer;
-}
-
-.read-more {
-    color: var(--fc-dark);
 }
 
 /* pagination */
