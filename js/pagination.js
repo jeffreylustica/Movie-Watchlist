@@ -1,5 +1,5 @@
-import {movieListContainerEl} from './variables.js'
-import {fetchSearchInput, renderHtmlReturn} from './utils.js'
+import {movieListContainerEl, page} from './variables.js'
+import {fetchSearchInput, fetchMovieInfo, renderMovieHtml, createListButton, changeButtonIcon} from './utils.js'
 
 function createPagination() {
     let highestPageNumber = 5
@@ -61,7 +61,10 @@ function handleButtons(highestPageNumber, lowestPageNumber) {
             (async () => {
                 const movieIdArr = await awaitReturn()
                 if (movieIdArr) {
-                    renderHtmlReturn(movieIdArr)
+                    const movieInfoHtml = await fetchMovieInfo(movieIdArr)
+                    renderMovieHtml(movieInfoHtml)
+                    createListButton()
+                    page === "index" && changeButtonIcon(movieIdArr)
                 }           
             })()
 

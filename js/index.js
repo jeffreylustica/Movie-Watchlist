@@ -1,6 +1,4 @@
-import {movieListContainerEl} from './variables.js'
-import {fetchSearchInput, renderHtmlReturn} from './utils.js'
-import {createPagination} from './pagination.js'
+import {handleAllFetch} from './utils.js'
 
 const formSubmit = document.querySelector('#search-movie-form')
 
@@ -9,24 +7,8 @@ formSubmit.addEventListener('submit', (e) => {
     const searchInput = formData.get('input').toLowerCase()
     e.preventDefault()
 
-    if (searchInput) {
-        movieListContainerEl.innerHTML = `
-            <div class="display-message">
-                <p>Loading...</p>
-            </div>`
-    
-        function awaitReturn() {
-            return fetchSearchInput(searchInput, 1)
-        }
-
-        (async () => {
-            const movieIdArr = await awaitReturn()
-            if (movieIdArr) {
-                renderHtmlReturn(movieIdArr)
-            }           
-        })()
-
-        createPagination()        
+    if (searchInput) {  
+        handleAllFetch(searchInput, 1)             
     }
 })
 

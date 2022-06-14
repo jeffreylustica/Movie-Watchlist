@@ -1,4 +1,5 @@
 import {movieListContainerEl, MovieWatchlist, page} from './variables.js'
+import {createPagination} from './pagination.js'
 
 async function fetchSearchInput(searchInput, pageNumber) {
     const res = await fetch(`http://www.omdbapi.com/?apikey=6c3bc615&s=${searchInput}&page=${pageNumber}`)
@@ -20,7 +21,7 @@ async function fetchSearchInput(searchInput, pageNumber) {
     } 
 }
 
-function renderHtmlReturn(argsArr) {
+function fetchMovieInfo(argsArr) {
     async function awaitReturn() {
         const arrHtml = argsArr.map(async (itemId) => {
             return await getMovieInfo(itemId)
@@ -28,11 +29,35 @@ function renderHtmlReturn(argsArr) {
         return arrHtml
     }
              
-    (async () => {
+    return (async () => {
         const values = await Promise.all(await awaitReturn())
-        movieListContainerEl.innerHTML = values.join('')            
-        createListButton()
-        page === "index" && changeButtonIcon(argsArr)
+        return values
+    })()
+}
+
+function renderMovieHtml(arrHtml) {
+    movieListContainerEl.innerHTML = arrHtml.join('')
+}
+
+function handleAllFetch(searchItem, pageNumber) {
+    movieListContainerEl.innerHTML = `
+            <div class="display-message">
+                <p>Loading...</p>
+            </div>`
+
+    function awaitReturn() {
+        return fetchSearchInput(searchItem, pageNumber)
+    }
+
+    (async () => {
+        const movieIdArr = await awaitReturn()
+        if (movieIdArr) {
+            const movieInfoHtml = await fetchMovieInfo(movieIdArr)
+            renderMovieHtml(movieInfoHtml)
+            createListButton()
+            page === "index" && changeButtonIcon(movieIdArr)
+            createPagination()  
+        }          
     })()
 }
 
@@ -103,7 +128,11 @@ function changeButtonIcon(idArr) {
 
 function renderWatchlist(watchlist) {
     if (watchlist.length) {
-        renderHtmlReturn(watchlist)
+        (async () => {
+            const movieInfoHtml = await fetchMovieInfo(watchlist)
+            renderMovieHtml(movieInfoHtml)
+            createListButton()       
+        })()
     } else {
         movieListContainerEl.innerHTML = `
             <div class="display-message">
@@ -114,4 +143,4 @@ function renderWatchlist(watchlist) {
 }
 
 
-export {fetchSearchInput, renderHtmlReturn, getMovieInfo, createListButton, changeButtonIcon, renderWatchlist}
+export {fetchSearchInput, fetchMovieInfo, getMovieInfo, createListButton, changeButtonIcon, renderWatchlist, renderMovieHtml, handleAllFetch}
