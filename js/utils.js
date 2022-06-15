@@ -78,7 +78,7 @@ async function getMovieInfo(movieId) {
             <div class="movie-info-secondary">
                 <span class="movie-minutes">${Runtime}</span>
                 <span class="movie-genre">${Genre}</span>
-                <button class="add-watchlist button-watchlist" id="watchlist-btn" data-id="${imdbID}">
+                <button class="button-watchlist" id="watchlist-btn" data-id="${imdbID}">
                     <img src="${page === "index" ? "icons/Orion_add-circle.png" : "icons/Orion_delete-circle.png"}"  class="toggle-icon" id="watchlist-btn-icon">
                     ${page === "index" ? "Watchlist" : "Remove"}
                 </button>

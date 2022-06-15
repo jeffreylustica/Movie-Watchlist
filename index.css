@@ -61,6 +61,14 @@ h1 {
     font-weight: var(--fw-bold);
     text-decoration: none;
     cursor: pointer;
+    border: 1px solid #ffffff;
+    padding: .5em 1em;
+    transition: 300ms;
+}
+
+.header-link:hover {
+    background-color: rgb(255, 255, 255, .9);
+    color: var(--fc-dark);
 }
 
 .header-main, .header-link {
@@ -249,6 +257,12 @@ header {
     background: none;
     border: none;
     cursor: pointer;
+    padding: .25em .625em;
+    border: 1px solid white;
+    transition: border 300ms;
+}
+.button-watchlist:hover {
+    border: 1px solid black;
 }
 
 /* pagination */
